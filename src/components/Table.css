@@ -1,0 +1,77 @@
+.table-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+}
+
+.custom-table th,
+.custom-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.custom-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.table-row {
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.table-row:hover {
+  background-color: #f9f9f9;
+}
+
+.table-row.expanded {
+  background-color: #e3f2fd;
+}
+
+.service-name {
+  font-weight: bold;
+}
+
+.expanded-content {
+  background-color: #fafafa;
+}
+
+.expanded-details {
+  padding: 15px;
+}
+
+.description-section,
+.price-section {
+  margin-bottom: 10px;
+}
+
+.description-section label,
+.price-section label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.editable-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.editable-input:focus {
+  outline: none;
+  border-color: #2196f3;
+}
+
+input[type="radio"] {
+  transform: scale(1.2);
+  cursor: pointer;
+}
