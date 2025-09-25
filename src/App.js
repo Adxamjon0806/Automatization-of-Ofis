@@ -6,7 +6,20 @@ import Requesits from "./components/Requesits";
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [requesits, setRequesits] = useState([]);
+  const [soliqUz, setSoliqUz] = useState(false);
+  const [didox, setDidox] = useState(false);
+  const [ownWay, setOwnWay] = useState(false);
   console.log(selectedDate);
+
+  function handleRadioChange(
+    firstSetterFunc,
+    secondSetterFunc,
+    thirdSetterFunc
+  ) {
+    firstSetterFunc(true);
+    secondSetterFunc(false);
+    thirdSetterFunc(false);
+  }
 
   return (
     <div className="container">
@@ -57,6 +70,42 @@ function App() {
       </div>
       <Requesits requesits={requesits} setRequesits={setRequesits} />
       <Tarrifs />
+      <div className="typesOfSendigWrapper">
+        <div>
+          <input
+            type="radio"
+            checked={soliqUz}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleRadioChange(setSoliqUz, setDidox, setOwnWay);
+            }}
+          />
+          <label>SoliqUz</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            checked={didox}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleRadioChange(setDidox, setSoliqUz, setOwnWay);
+            }}
+          />
+          <label>Didox</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            checked={ownWay}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleRadioChange(setOwnWay, setDidox, setSoliqUz);
+            }}
+          />
+          <input placeholder="Свой вариант" />
+        </div>
+      </div>
+      <button className="sendButton">Отправить</button>
     </div>
   );
 }

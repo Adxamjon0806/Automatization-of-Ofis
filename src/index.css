@@ -1396,3 +1396,17 @@ h2.react-datepicker__current-month {
   border: 1px solid rgb(83, 83, 83);
   border-radius: 5px;
 }
+
+.typesOfSendigWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.sendButton {
+  width: 200px;
+  font-size: 25px;
+  border-radius: 5px;
+  background: #009926;
+}
