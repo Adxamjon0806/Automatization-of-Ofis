@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseRequest = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://automatization-server.onrender.com",
 });
 
 export const postTheDatas = async function (data) {
