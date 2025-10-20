@@ -4,7 +4,7 @@ const Requesits = ({ requesits, setRequesits }) => {
   function addRequesits() {
     return [
       ...requesits,
-      { id: requesits.length + 1, nameOfRequesit: "", number: "" },
+      { id: requesits.length + 1, nameOfRequesit: "", requesitsNumber: "" },
     ];
   }
 
@@ -20,12 +20,12 @@ const Requesits = ({ requesits, setRequesits }) => {
     setRequesits([...changingRequesits]);
   }
 
-  function setNumberOfRequesits(id, number) {
+  function setNumberOfRequesits(id, requesitsNumber) {
     const changingRequesits = requesits;
     for (let i = 0; i < changingRequesits.length; i++) {
       const el = changingRequesits[i];
       if (el.id === id) {
-        el.number = number;
+        el.requesitsNumber = requesitsNumber;
       }
     }
     setRequesits([...changingRequesits]);
@@ -35,7 +35,7 @@ const Requesits = ({ requesits, setRequesits }) => {
       <button onClick={() => setRequesits(addRequesits())} className="addBtn">
         +
       </button>
-      {requesits.map(({ id, nameOfRequesit, number }) => (
+      {requesits.map(({ id, nameOfRequesit, requesitsNumber }) => (
         <div key={id}>
           <div>
             <label>Наименование реквизита:</label>
@@ -47,7 +47,7 @@ const Requesits = ({ requesits, setRequesits }) => {
           <div>
             <label>Номер реквизита:</label>
             <input
-              value={number}
+              value={requesitsNumber}
               onChange={(e) => setNumberOfRequesits(id, e.target.value)}
             />
           </div>

@@ -2,23 +2,59 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import Tarrifs from "./components/Tarrifs";
 import Requesits from "./components/Requesits";
+import AbonentTarrifs from "./components/AbonentTarrifs";
+import { formSchema } from "./service/formSchema";
+import { postTheDatas } from "./service/axiosAPI";
 
 function App() {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState("");
   const [requesits, setRequesits] = useState([]);
-  const [soliqUz, setSoliqUz] = useState(false);
-  const [didox, setDidox] = useState(false);
-  const [ownWay, setOwnWay] = useState(false);
-  console.log(selectedDate);
 
-  function handleRadioChange(
-    firstSetterFunc,
-    secondSetterFunc,
-    thirdSetterFunc
-  ) {
-    firstSetterFunc(true);
-    secondSetterFunc(false);
-    thirdSetterFunc(false);
+  // Данные формы
+  const [formData, setFormData] = useState({
+    companyName: "",
+    directorName: "",
+    address: "",
+    phone: "",
+    account: "",
+    bank: "",
+    nfo: "",
+    okef: "",
+    inn: "",
+    taxNumber: "",
+    date: new Date(),
+    tarrifs: [],
+    abonentTarrifs: [],
+    sendingMethod: "",
+    requesits: [],
+    manager: "",
+  });
+
+  // Ошибки
+  const [errors, setErrors] = useState({});
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function handleSubmit() {
+    const parsed = formSchema.safeParse({
+      ...formData,
+      date: selectedDate,
+      requesits: requesits,
+    });
+    if (!parsed.success) {
+      const fieldErrors = {};
+      console.log(parsed);
+      parsed.error._zod.def.forEach((err) => {
+        fieldErrors[err.path[0]] = err.message;
+      });
+      setErrors(fieldErrors);
+    } else {
+      setErrors({});
+      postTheDatas(formData);
+    }
   }
 
   return (
@@ -28,56 +64,83 @@ function App() {
         selected={selectedDate}
         onChange={(date) => setSelectedDate(date)}
       />
+      {errors.date && <p className="error">{errors.date}</p>}
       <div>
         <label>Наименование Компании: </label>
-        <input />
+        <input
+          name="companyName"
+          value={formData.companyName}
+          onChange={handleChange}
+        />
+        {errors.companyName && <p className="error">{errors.companyName}</p>}
       </div>
       <div>
         <label>Имя Директора: </label>
-        <input />
+        <input
+          name="directorName"
+          value={formData.directorName}
+          onChange={handleChange}
+        />
       </div>
       <div>
         <label>Адрес: </label>
-        <input />
+        <input
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+        />
       </div>
       <div>
         <label>Телефон: </label>
-        <input />
+        <input name="phone" value={formData.phone} onChange={handleChange} />
       </div>
       <div>
         <label>Рассчётный Счёт: </label>
-        <input />
+        <input
+          name="account"
+          value={formData.account}
+          onChange={handleChange}
+        />
       </div>
       <div>
         <label>Банк: </label>
-        <input />
+        <input name="bank" value={formData.bank} onChange={handleChange} />
       </div>
       <div>
         <label>НФО: </label>
-        <input />
+        <input name="nfo" value={formData.nfo} onChange={handleChange} />
       </div>
       <div>
         <label>ОКЭФ: </label>
-        <input />
+        <input name="okef" value={formData.okef} onChange={handleChange} />
       </div>
       <div>
         <label>ИНН: </label>
-        <input />
+        <input name="inn" value={formData.inn} onChange={handleChange} />
+        {errors.inn && <p className="error">{errors.inn}</p>}
       </div>
       <div>
         <label>Регистрациоонный номер налогоплательщика: </label>
-        <input />
+        <input
+          name="taxNumber"
+          value={formData.taxNumber}
+          onChange={handleChange}
+        />
       </div>
       <Requesits requesits={requesits} setRequesits={setRequesits} />
-      <Tarrifs />
+      <Tarrifs setFormData={setFormData} />
+      {errors.tarrifs && <p className="error">{errors.tarrifs}</p>}
+      <AbonentTarrifs setFormData={setFormData} />
       <div className="typesOfSendigWrapper">
         <div>
           <input
             type="radio"
-            checked={soliqUz}
+            checked={formData.sendingMethod === "soliqUz"}
+            onChange={() => {}}
             onClick={(e) => {
               e.stopPropagation();
-              handleRadioChange(setSoliqUz, setDidox, setOwnWay);
+              // handleRadioChange(setSoliqUz, setDidox, setOwnWay);
+              setFormData((prev) => ({ ...prev, sendingMethod: "soliqUz" }));
             }}
           />
           <label>SoliqUz</label>
@@ -85,10 +148,12 @@ function App() {
         <div>
           <input
             type="radio"
-            checked={didox}
+            checked={formData.sendingMethod === "didox"}
+            onChange={() => {}}
             onClick={(e) => {
               e.stopPropagation();
-              handleRadioChange(setDidox, setSoliqUz, setOwnWay);
+              // handleRadioChange(setDidox, setSoliqUz, setOwnWay);
+              setFormData((prev) => ({ ...prev, sendingMethod: "didox" }));
             }}
           />
           <label>Didox</label>
@@ -96,16 +161,49 @@ function App() {
         <div>
           <input
             type="radio"
-            checked={ownWay}
+            checked={
+              formData.sendingMethod !== "didox" &&
+              formData.sendingMethod !== "soliqUz" &&
+              formData.sendingMethod
+            }
+            onChange={() => {
+              setFormData((prev) => ({
+                ...prev,
+                sendingMethod: "Свой способ",
+              }));
+            }}
             onClick={(e) => {
               e.stopPropagation();
-              handleRadioChange(setOwnWay, setDidox, setSoliqUz);
+              // handleRadioChange(setOwnWay, setDidox, setSoliqUz);
+              setFormData((prev) => ({ ...prev, sendingMethod: "" }));
             }}
           />
-          <input placeholder="Свой вариант" />
+          <input
+            placeholder="Свой вариант"
+            name="sendingMethod"
+            value={formData.sendingMethod}
+            onChange={handleChange}
+          />
         </div>
       </div>
-      <button className="sendButton">Отправить</button>
+      <div>
+        <label>
+          Выберите менеджера контракта:
+          <select
+            name="manager"
+            value={formData.manager}
+            onChange={handleChange}
+          >
+            <option value="">-- Выберите --</option>
+            <option value={"Хусан1"}>Хусан1</option>
+            <option value={"Хусан2"}>Хусан2</option>
+            <option value={"Хусан3"}>Хусан3</option>
+          </select>
+        </label>
+      </div>
+      <button className="sendButton" onClick={handleSubmit}>
+        Отправить
+      </button>
     </div>
   );
 }

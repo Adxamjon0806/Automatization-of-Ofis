@@ -1,40 +1,43 @@
 import React, { useState } from "react";
 import "./Table.css"; // Стили для таблицы
-import { tarrifData } from "../service/tarrifDatas";
+import { abonentTarrifDatas } from "../service/tarrifDatas";
 
-const Tarrifs = ({ setFormData }) => {
+const AbonentTarrifs = ({ setFormData }) => {
   const [expandedRow, setExpandedRow] = useState(null);
-  const [tarrifs, setServices] = useState(tarrifData);
+  const [services, setServices] = useState(abonentTarrifDatas);
 
   const toggleRow = (id) => {
     setExpandedRow(expandedRow === id ? null : id);
   };
 
   const handleRadioChange = (id) => {
-    const updatedServices = tarrifs.map((service) => ({
+    const updatedServices = services.map((service) => ({
       ...service,
       selected: service.id === id ? !service.selected : service.selected,
     }));
+    console.log(updatedServices);
+
     setServices(updatedServices);
 
     const updateFormTarrifs = updatedServices.filter((el) => el.selected);
 
-    setFormData((prev) => ({ ...prev, tarrifs: updateFormTarrifs }));
+    setFormData((prev) => ({ ...prev, abonentTarrifs: updateFormTarrifs }));
   };
 
   const handleInputChange = (id, field, value) => {
-    const updatedServices = tarrifs.map((service) =>
+    const updatedServices = services.map((service) =>
       service.id === id ? { ...service, [field]: value } : service
     );
 
     for (let i = 0; i < updatedServices.length; i++) {
       const element = updatedServices[i];
-      element.totalPrice = Number(element.price) * Number(element.count);
+      element.totalPrice =
+        Number(element.price) * Number(element.count) * Number(element.term);
     }
     setServices(updatedServices);
     const updateFormTarrifs = updatedServices.filter((el) => el.selected);
 
-    setFormData((prev) => ({ ...prev, tarrifs: updateFormTarrifs }));
+    setFormData((prev) => ({ ...prev, abonentTarrifs: updateFormTarrifs }));
   };
 
   return (
@@ -42,12 +45,12 @@ const Tarrifs = ({ setFormData }) => {
       <table className="custom-table">
         <thead>
           <tr>
-            <th>Услуги с разовыми начислениями</th>
+            <th>Услуги с ежемесячными начислениями</th>
             <th width="100">Выбор</th>
           </tr>
         </thead>
         <tbody>
-          {tarrifs.map((service) => (
+          {services.map((service) => (
             <React.Fragment key={service.id}>
               {/* Основная строка */}
               <tr
@@ -62,7 +65,7 @@ const Tarrifs = ({ setFormData }) => {
                 <td>
                   <input
                     type="checkbox"
-                    name={"tarrif" + service.id}
+                    name={"abonentTarrif" + service.id}
                     checked={service.selected}
                     onChange={() => {
                       handleRadioChange(service.id);
@@ -129,6 +132,22 @@ const Tarrifs = ({ setFormData }) => {
                           onClick={(e) => e.stopPropagation()}
                         />
                       </div>
+                      <div className="count-section">
+                        <label>Срок:</label>
+                        <input
+                          type="number"
+                          value={service.term}
+                          onChange={(e) =>
+                            handleInputChange(
+                              service.id,
+                              "term",
+                              e.target.value
+                            )
+                          }
+                          className="editable-input"
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                      </div>
                       <div className="totalPrice-section">
                         <label>Общая сумма:</label>
                         <input
@@ -151,4 +170,4 @@ const Tarrifs = ({ setFormData }) => {
   );
 };
 
-export default Tarrifs;
+export default AbonentTarrifs;

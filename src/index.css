@@ -1410,3 +1410,7 @@ h2.react-datepicker__current-month {
   border-radius: 5px;
   background: #009926;
 }
+
+.error {
+  color: red;
+}
