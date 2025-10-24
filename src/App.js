@@ -7,6 +7,7 @@ import { formSchema } from "./service/formSchema";
 import { postTheDatas } from "./service/axiosAPI";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [requesits, setRequesits] = useState([]);
 
@@ -53,7 +54,8 @@ function App() {
       setErrors(fieldErrors);
     } else {
       setErrors({});
-      postTheDatas(formData);
+      postTheDatas(formData, setIsLoading);
+      setIsLoading(true);
     }
   }
 
@@ -195,15 +197,26 @@ function App() {
             onChange={handleChange}
           >
             <option value="">-- Выберите --</option>
-            <option value={"Хусан1"}>Хусан1</option>
-            <option value={"Хусан2"}>Хусан2</option>
-            <option value={"Хусан3"}>Хусан3</option>
+            <option value={"Маннапов А."}>Маннапов А.</option>
+            <option value={"Рахимов М."}>Рахимов М.</option>
+            <option value={"Арифджанов О."}>Арифджанов О.</option>
+            <option value={"Омонуллаев Х."}>Омонуллаев Х.</option>
+            <option value={"Шодиев И."}>Шодиев И.</option>
+            <option value={"Нишонов Х."}>Нишонов Х.</option>
           </select>
         </label>
       </div>
-      <button className="sendButton" onClick={handleSubmit}>
-        Отправить
-      </button>
+      <div className="sendingWrapper">
+        <button
+          className="sendButton"
+          onClick={isLoading ? () => {} : handleSubmit}
+        >
+          Отправить
+        </button>
+        <p className="watingText">
+          {isLoading ? "Подождите пока ваш файл не загрузиться . . ." : ""}
+        </p>
+      </div>
     </div>
   );
 }

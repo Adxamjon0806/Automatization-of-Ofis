@@ -3,12 +3,7 @@ import "./Table.css"; // Стили для таблицы
 import { tarrifData } from "../service/tarrifDatas";
 
 const Tarrifs = ({ setFormData }) => {
-  const [expandedRow, setExpandedRow] = useState(null);
   const [tarrifs, setServices] = useState(tarrifData);
-
-  const toggleRow = (id) => {
-    setExpandedRow(expandedRow === id ? null : id);
-  };
 
   const handleRadioChange = (id) => {
     const updatedServices = tarrifs.map((service) => ({
@@ -51,10 +46,10 @@ const Tarrifs = ({ setFormData }) => {
             <React.Fragment key={service.id}>
               {/* Основная строка */}
               <tr
-                className={`table-row ${
-                  expandedRow === service.id ? "expanded" : ""
-                }`}
-                onClick={() => toggleRow(service.id)}
+                className={`table-row ${service.selected ? "expanded" : ""}`}
+                onClick={() => {
+                  handleRadioChange(service.id);
+                }}
               >
                 <td>
                   <div className="service-name">{service.name}</div>
@@ -76,7 +71,7 @@ const Tarrifs = ({ setFormData }) => {
               </tr>
 
               {/* Расширяемая часть */}
-              {expandedRow === service.id && (
+              {service.selected && (
                 <tr className="expanded-content">
                   <td colSpan="2">
                     <div className="expanded-details">
