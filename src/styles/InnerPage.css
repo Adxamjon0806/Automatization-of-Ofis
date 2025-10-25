@@ -1,0 +1,19 @@
+.innerPageFlex {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding-top: 150px;
+}
+
+.innerPageFlex .mainLink {
+  width: 340px;
+  text-align: center;
+  padding: 25px 40px;
+  background-color: aqua;
+  border: 1px solid #2f8481;
+  font-size: 20px;
+  border-radius: 15px;
+}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Table.css"; // Стили для таблицы
+import "../styles/Table.css"; // Стили для таблицы
 import { tarrifData } from "../service/tarrifDatas";
 
 const Tarrifs = ({ setFormData }) => {
