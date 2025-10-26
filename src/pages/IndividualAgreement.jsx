@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { formSchema } from "../service/formSchema";
-import { postTheDatas } from "../service/axiosAPI";
+import { individualSchema } from "../service/formSchema";
+import { postTheIndividualDatas } from "../service/axiosAPI";
 import DatePicker from "react-datepicker";
 import Requesits from "../components/Requesits";
 import Tarrifs from "../components/Tarrifs";
@@ -9,20 +9,18 @@ import AbonentTarrifs from "../components/AbonentTarrifs";
 const IndividualAgreement = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
+  const [givenAt, setGivenAt] = useState("");
   const [requesits, setRequesits] = useState([]);
 
   // Данные формы
   const [formData, setFormData] = useState({
-    companyName: "",
-    directorName: "",
-    address: "",
+    personName: "",
     phone: "",
-    account: "",
-    bank: "",
-    nfo: "",
-    okef: "",
+    passportSerries: "",
+    passportNumber: "",
+    givenFrom: "",
+    pinfl: "",
     inn: "",
-    taxNumber: "",
     date: new Date(),
     tarrifs: [],
     abonentTarrifs: [],
@@ -40,7 +38,7 @@ const IndividualAgreement = () => {
   }
 
   function handleSubmit() {
-    const parsed = formSchema.safeParse({
+    const parsed = individualSchema.safeParse({
       ...formData,
       date: selectedDate,
       requesits: requesits,
@@ -53,14 +51,17 @@ const IndividualAgreement = () => {
       });
       setErrors(fieldErrors);
     } else {
+      console.log({ ...formData, givenAt });
+
       setErrors({});
-      postTheDatas(formData, setIsLoading);
+      postTheIndividualDatas({ ...formData, givenAt }, setIsLoading);
       setIsLoading(true);
     }
   }
 
   return (
     <div className="container">
+      <label>Дата договора:</label>
       <DatePicker
         showIcon
         selected={selectedDate}
@@ -68,66 +69,71 @@ const IndividualAgreement = () => {
       />
       {errors.date && <p className="error">{errors.date}</p>}
       <div>
-        <label>Наименование Компании: </label>
+        <label>ФИО: </label>
         <input
-          name="companyName"
-          value={formData.companyName}
-          onChange={handleChange}
-        />
-        {errors.companyName && <p className="error">{errors.companyName}</p>}
-      </div>
-      <div>
-        <label>Имя Директора: </label>
-        <input
-          name="directorName"
-          value={formData.directorName}
+          name="personName"
+          value={formData.personName}
           onChange={handleChange}
         />
       </div>
-      <div>
-        <label>Адрес: </label>
-        <input
-          name="address"
-          value={formData.address}
-          onChange={handleChange}
-        />
-      </div>
+      {errors.personName && <p className="error">{errors.personName}</p>}
       <div>
         <label>Телефон: </label>
         <input name="phone" value={formData.phone} onChange={handleChange} />
       </div>
       <div>
-        <label>Рассчётный Счёт: </label>
+        <label>Серия паспорта: </label>
         <input
-          name="account"
-          value={formData.account}
+          name="passportSerries"
+          value={formData.passportSerries}
+          onChange={handleChange}
+        />
+      </div>
+      {errors.passportSerries && (
+        <p className="error">{errors.passportSerries}</p>
+      )}
+      <div>
+        <label>Номер паспорта: </label>
+        <input
+          type="number"
+          name="passportNumber"
+          value={formData.passportNumber}
+          onChange={handleChange}
+        />
+      </div>
+      {errors.passportNumber && (
+        <p className="error">{errors.passportNumber}</p>
+      )}
+      <div>
+        <label>Кем выдан: </label>
+        <input
+          name="givenFrom"
+          value={formData.givenFrom}
           onChange={handleChange}
         />
       </div>
       <div>
-        <label>Банк: </label>
-        <input name="bank" value={formData.bank} onChange={handleChange} />
+        <label>Когда выдан: </label>
+        <DatePicker
+          showIcon
+          selected={givenAt}
+          onChange={(date) => setGivenAt(date)}
+        />
       </div>
       <div>
-        <label>НФО: </label>
-        <input name="nfo" value={formData.nfo} onChange={handleChange} />
+        <label>ПИНФЛ: </label>
+        <input
+          type="number"
+          name="pinfl"
+          value={formData.pinfl}
+          onChange={handleChange}
+        />
       </div>
-      <div>
-        <label>ОКЭФ: </label>
-        <input name="okef" value={formData.okef} onChange={handleChange} />
-      </div>
+      {errors.pinfl && <p className="error">{errors.pinfl}</p>}
       <div>
         <label>ИНН: </label>
         <input name="inn" value={formData.inn} onChange={handleChange} />
         {errors.inn && <p className="error">{errors.inn}</p>}
-      </div>
-      <div>
-        <label>Регистрациоонный номер налогоплательщика: </label>
-        <input
-          name="taxNumber"
-          value={formData.taxNumber}
-          onChange={handleChange}
-        />
       </div>
       <Requesits requesits={requesits} setRequesits={setRequesits} />
       <Tarrifs setFormData={setFormData} />

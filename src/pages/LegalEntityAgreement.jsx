@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { formSchema } from "../service/formSchema";
-import { postTheDatas } from "../service/axiosAPI";
+import { legalEntitySchema } from "../service/formSchema";
+import { postTheLegalDatas } from "../service/axiosAPI";
 import DatePicker from "react-datepicker";
 import Requesits from "../components/Requesits";
 import Tarrifs from "../components/Tarrifs";
@@ -40,7 +40,7 @@ const LegalEntityAgreement = () => {
   }
 
   function handleSubmit() {
-    const parsed = formSchema.safeParse({
+    const parsed = legalEntitySchema.safeParse({
       ...formData,
       date: selectedDate,
       requesits: requesits,
@@ -54,7 +54,7 @@ const LegalEntityAgreement = () => {
       setErrors(fieldErrors);
     } else {
       setErrors({});
-      postTheDatas(formData, setIsLoading);
+      postTheLegalDatas(formData, setIsLoading);
       setIsLoading(true);
     }
   }
