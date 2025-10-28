@@ -29,6 +29,7 @@ const LegalEntityAgreement = () => {
     sendingMethod: "",
     requesits: [],
     manager: "",
+    dealingCompany: "",
   });
 
   // Ошибки
@@ -206,6 +207,23 @@ const LegalEntityAgreement = () => {
           </select>
         </label>
       </div>
+      <div>
+        <label>
+          Выберите компанию, через которую вы совершаете договор:
+          <select
+            name="dealingCompany"
+            value={formData.dealingCompany}
+            onChange={handleChange}
+          >
+            <option value="">-- Выберите --</option>
+            <option value={"UZGPS"}>UZGPS</option>
+            <option value={"BEPRO"}>BEPRO</option>
+          </select>
+        </label>
+      </div>
+      {errors.dealingCompany && (
+        <p className="error">{errors.dealingCompany}</p>
+      )}
       <div className="sendingWrapper">
         <button
           className="sendButton"

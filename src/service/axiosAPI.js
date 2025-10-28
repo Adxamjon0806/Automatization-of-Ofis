@@ -97,3 +97,26 @@ export const postTheIndividualDatas = async function (data, setIsLoading) {
     console.error(e);
   }
 };
+
+export const getCount = async function () {
+  try {
+    const response = await baseRequest({ method: "get", url: "/get-count" });
+    return response.data.count;
+  } catch (e) {
+    console.error("Ошибка при получении счёта", e);
+  }
+};
+
+export const changeCountRequest = async function (count, setCount) {
+  try {
+    const response = await baseRequest({
+      method: "post",
+      url: "/change-count",
+      data: { count },
+    });
+    setCount(response.data.newCount);
+    return response.data.newCount;
+  } catch (e) {
+    console.error("Ошибка при изменении счёта", e);
+  }
+};

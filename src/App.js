@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { IndividualAgreement, InnerPage, LegalEntityAgreement } from "./pages";
+import {
+  ChangeCount,
+  IndividualAgreement,
+  InnerPage,
+  LegalEntityAgreement,
+} from "./pages";
 
 function App() {
   return (
@@ -12,6 +17,7 @@ function App() {
           element={<LegalEntityAgreement />}
         />
         <Route path="/individual-agreement" element={<IndividualAgreement />} />
+        <Route path="/change-count" element={<ChangeCount />} />
       </Routes>
     </BrowserRouter>
   );

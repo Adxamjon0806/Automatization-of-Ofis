@@ -5,6 +5,10 @@ export const legalEntitySchema = z.object({
   date: z.date("Выберите дату"),
   inn: z.string().regex(/^[0-9]{9}$/, "ИНН должен состоять из 9 цифр"),
   companyName: z.string().min(2, "Введите название компании"),
+  dealingCompany: z.enum(
+    ["UZGPS", "BEPRO"],
+    "Выберите компанию, через которую вы совершаете договор"
+  ),
 });
 
 export const individualSchema = z.object({
@@ -26,4 +30,8 @@ export const individualSchema = z.object({
     .string()
     .min(1, "ИНН обязателен")
     .regex(/^\d{9}$/, "ИНН должен состоять из 9 цифр"),
+  dealingCompany: z.enum(
+    ["UZGPS", "BEPRO"],
+    "Выберите компанию, через которую вы совершаете договор"
+  ),
 });
