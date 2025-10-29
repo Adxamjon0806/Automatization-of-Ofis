@@ -1,9 +1,9 @@
 import axios from "axios";
 
-// const _ = "https://automatization-server.onrender.com";
+// const _ = "http://localhost:5000";
 
 const baseRequest = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://automatization-server.onrender.com",
 });
 
 export const postTheLegalDatas = async function (data, setIsLoading) {
