@@ -110,11 +110,11 @@ const LegalEntityAgreement = () => {
         <input name="bank" value={formData.bank} onChange={handleChange} />
       </div>
       <div>
-        <label>НФО: </label>
+        <label>МФО: </label>
         <input name="nfo" value={formData.nfo} onChange={handleChange} />
       </div>
       <div>
-        <label>ОКЭФ: </label>
+        <label>ОКЭД: </label>
         <input name="okef" value={formData.okef} onChange={handleChange} />
       </div>
       <div>

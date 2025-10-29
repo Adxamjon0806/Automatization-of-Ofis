@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const _ = "http://localhost:5000";
+// const _ = "http://localhost:5000";
 
 const baseRequest = axios.create({
   baseURL: "https://automatization-server.onrender.com",
@@ -101,20 +101,22 @@ export const postTheIndividualDatas = async function (data, setIsLoading) {
 export const getCount = async function () {
   try {
     const response = await baseRequest({ method: "get", url: "/get-count" });
+    console.log(response.data);
+
     return response.data.count;
   } catch (e) {
     console.error("Ошибка при получении счёта", e);
   }
 };
 
-export const changeCountRequest = async function (count, setCount) {
+export const changeCountRequest = async function (count, countBody, setCount) {
   try {
     const response = await baseRequest({
       method: "post",
       url: "/change-count",
-      data: { count },
+      data: { count, countBody },
     });
-    setCount(response.data.newCount);
+    setCount(response.data.newCount.count);
     return response.data.newCount;
   } catch (e) {
     console.error("Ошибка при изменении счёта", e);

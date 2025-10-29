@@ -4,11 +4,13 @@ import { changeCountRequest, getCount } from "../service/axiosAPI";
 const ChangeCount = () => {
   const [count, setCount] = useState("");
   const [newCount, setNewCount] = useState("");
+  const [countBody, setCountBody] = useState({});
 
   useEffect(() => {
     (async () => {
       const count = await getCount();
-      setCount(count);
+      setCountBody(count);
+      setCount(count.count);
     })();
   }, []);
 
@@ -20,7 +22,7 @@ const ChangeCount = () => {
         value={newCount}
         onChange={(e) => setNewCount(e.target.value)}
       />
-      <button onClick={() => changeCountRequest(newCount, setCount)}>
+      <button onClick={() => changeCountRequest(newCount, countBody, setCount)}>
         Изменить счёт
       </button>
     </div>
