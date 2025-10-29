@@ -26,10 +26,6 @@ export const individualSchema = z.object({
     .string()
     .min(1, "ПИНФЛ обязателен")
     .regex(/^\d{14}$/, "ПИНФЛ должен состоять из 14 цифр"),
-  inn: z
-    .string()
-    .min(1, "ИНН обязателен")
-    .regex(/^\d{9}$/, "ИНН должен состоять из 9 цифр"),
   dealingCompany: z.enum(
     ["UZGPS", "BEPRO"],
     "Выберите компанию, через которую вы совершаете договор"
