@@ -10,6 +10,7 @@ export const legalEntitySchema = z.object({
     ["UZGPS", "BEPRO"],
     "Выберите компанию, через которую вы совершаете договор"
   ),
+  sendingMethod: z.string().min(3, "Выберите способ отправки"),
   manager: z.string().min(2, "Выберите Менеджера контракта"),
 });
 
@@ -33,5 +34,6 @@ export const individualSchema = z.object({
     ["UZGPS", "BEPRO"],
     "Выберите компанию, через которую вы совершаете договор"
   ),
+  sendingMethod: z.string().min(3, "Выберите способ отправки"),
   manager: z.string().min(2, "Выберите Менеджера контракта"),
 });

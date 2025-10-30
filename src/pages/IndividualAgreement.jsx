@@ -147,60 +147,65 @@ const IndividualAgreement = () => {
       <Tarrifs setFormData={setFormData} />
       {errors.tarrifs && <p className="error">{errors.tarrifs}</p>}
       <AbonentTarrifs setFormData={setFormData} />
-      <div className="typesOfSendigWrapper">
-        <div>
-          <input
-            type="radio"
-            checked={formData.sendingMethod === "soliqUz"}
-            onChange={() => {}}
-            onClick={(e) => {
-              e.stopPropagation();
-              // handleRadioChange(setSoliqUz, setDidox, setOwnWay);
-              setFormData((prev) => ({ ...prev, sendingMethod: "soliqUz" }));
-            }}
-          />
-          <label>SoliqUz</label>
+      <div className="SengingErrorWrapper">
+        <div className="typesOfSendigWrapper">
+          <div>
+            <input
+              type="radio"
+              checked={formData.sendingMethod === "soliqUz"}
+              onChange={() => {}}
+              onClick={(e) => {
+                e.stopPropagation();
+                // handleRadioChange(setSoliqUz, setDidox, setOwnWay);
+                setFormData((prev) => ({ ...prev, sendingMethod: "soliqUz" }));
+              }}
+            />
+            <label>SoliqUz</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              checked={formData.sendingMethod === "didox"}
+              onChange={() => {}}
+              onClick={(e) => {
+                e.stopPropagation();
+                // handleRadioChange(setDidox, setSoliqUz, setOwnWay);
+                setFormData((prev) => ({ ...prev, sendingMethod: "didox" }));
+              }}
+            />
+            <label>Didox</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              checked={
+                formData.sendingMethod !== "didox" &&
+                formData.sendingMethod !== "soliqUz" &&
+                formData.sendingMethod
+              }
+              onChange={() => {
+                setFormData((prev) => ({
+                  ...prev,
+                  sendingMethod: "Свой способ",
+                }));
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                // handleRadioChange(setOwnWay, setDidox, setSoliqUz);
+                setFormData((prev) => ({ ...prev, sendingMethod: "" }));
+              }}
+            />
+            <input
+              placeholder="Свой вариант"
+              name="sendingMethod"
+              value={formData.sendingMethod}
+              onChange={handleChange}
+            />
+          </div>
         </div>
-        <div>
-          <input
-            type="radio"
-            checked={formData.sendingMethod === "didox"}
-            onChange={() => {}}
-            onClick={(e) => {
-              e.stopPropagation();
-              // handleRadioChange(setDidox, setSoliqUz, setOwnWay);
-              setFormData((prev) => ({ ...prev, sendingMethod: "didox" }));
-            }}
-          />
-          <label>Didox</label>
-        </div>
-        <div>
-          <input
-            type="radio"
-            checked={
-              formData.sendingMethod !== "didox" &&
-              formData.sendingMethod !== "soliqUz" &&
-              formData.sendingMethod
-            }
-            onChange={() => {
-              setFormData((prev) => ({
-                ...prev,
-                sendingMethod: "Свой способ",
-              }));
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-              // handleRadioChange(setOwnWay, setDidox, setSoliqUz);
-              setFormData((prev) => ({ ...prev, sendingMethod: "" }));
-            }}
-          />
-          <input
-            placeholder="Свой вариант"
-            name="sendingMethod"
-            value={formData.sendingMethod}
-            onChange={handleChange}
-          />
-        </div>
+        {errors.sendingMethod && (
+          <p className="error">{errors.sendingMethod}</p>
+        )}
       </div>
       <div>
         <label>
@@ -252,6 +257,12 @@ const IndividualAgreement = () => {
           {isLoading ? "Подождите пока ваш файл не загрузиться . . ." : ""}
         </p>
       </div>
+      {Object.keys(errors).length !== 0 && (
+        <p className="error">
+          Вы не корректно ввели данные, проверьте пожалуйста форму и попробуйте
+          снова
+        </p>
+      )}
     </div>
   );
 };
