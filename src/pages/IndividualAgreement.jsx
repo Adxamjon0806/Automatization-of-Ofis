@@ -20,12 +20,12 @@ const IndividualAgreement = () => {
     passportNumber: "",
     givenFrom: "",
     pinfl: "",
+    address: "",
     inn: "",
     date: new Date(),
     tarrifs: [],
     abonentTarrifs: [],
     sendingMethod: "",
-    requesits: [],
     manager: "",
     dealingCompany: "",
   });
@@ -52,10 +52,8 @@ const IndividualAgreement = () => {
       });
       setErrors(fieldErrors);
     } else {
-      console.log({ ...formData, givenAt });
-
       setErrors({});
-      postTheIndividualDatas({ ...formData, givenAt }, setIsLoading);
+      postTheIndividualDatas({ ...formData, givenAt, requesits }, setIsLoading);
       setIsLoading(true);
     }
   }
@@ -81,6 +79,15 @@ const IndividualAgreement = () => {
       <div>
         <label>Телефон: </label>
         <input name="phone" value={formData.phone} onChange={handleChange} />
+        {errors.phone && <p className="error">{errors.phone}</p>}
+      </div>
+      <div>
+        <label>Адрес: </label>
+        <input
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+        />
       </div>
       <div>
         <label>Серия паспорта: </label>
@@ -210,8 +217,12 @@ const IndividualAgreement = () => {
             <option value={"Омонуллаев Х."}>Омонуллаев Х.</option>
             <option value={"Шодиев И."}>Шодиев И.</option>
             <option value={"Нишонов Х."}>Нишонов Х.</option>
+            <option value={"Жавлиев А."}>Жавлиев А.</option>
+            <option value={"Махмудов Б."}>Махмудов Б.</option>
+            <option value={"Бойжигитов Ш."}>Бойжигитов Ш.</option>
           </select>
         </label>
+        {errors.manager && <p className="error">{errors.manager}</p>}
       </div>
       <div>
         <label>

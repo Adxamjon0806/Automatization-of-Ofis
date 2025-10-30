@@ -27,7 +27,6 @@ const LegalEntityAgreement = () => {
     tarrifs: [],
     abonentTarrifs: [],
     sendingMethod: "",
-    requesits: [],
     manager: "",
     dealingCompany: "",
   });
@@ -55,7 +54,7 @@ const LegalEntityAgreement = () => {
       setErrors(fieldErrors);
     } else {
       setErrors({});
-      postTheLegalDatas(formData, setIsLoading);
+      postTheLegalDatas({ ...formData, requesits }, setIsLoading);
       setIsLoading(true);
     }
   }
@@ -96,6 +95,7 @@ const LegalEntityAgreement = () => {
       <div>
         <label>Телефон: </label>
         <input name="phone" value={formData.phone} onChange={handleChange} />
+        {errors.phone && <p className="error">{errors.phone}</p>}
       </div>
       <div>
         <label>Рассчётный Счёт: </label>
@@ -204,8 +204,12 @@ const LegalEntityAgreement = () => {
             <option value={"Омонуллаев Х."}>Омонуллаев Х.</option>
             <option value={"Шодиев И."}>Шодиев И.</option>
             <option value={"Нишонов Х."}>Нишонов Х.</option>
+            <option value={"Жавлиев А."}>Жавлиев А.</option>
+            <option value={"Махмудов Б."}>Махмудов Б.</option>
+            <option value={"Бойжигитов Ш."}>Бойжигитов Ш.</option>
           </select>
         </label>
+        {errors.manager && <p className="error">{errors.manager}</p>}
       </div>
       <div>
         <label>

@@ -3,17 +3,32 @@ import z from "zod";
 // Схема валидации с Zod
 export const legalEntitySchema = z.object({
   date: z.date("Выберите дату"),
+  phone: z
+    .string()
+    .nonempty({ message: "Телефон обязателен" })
+    .trim()
+    .refine((s) => /^\+[1-9]\d{7,14}$/.test(s), {
+      message: "Номер должен быть в формате E.164, например +79123456789",
+    }),
   inn: z.string().regex(/^[0-9]{9}$/, "ИНН должен состоять из 9 цифр"),
   companyName: z.string().min(2, "Введите название компании"),
   dealingCompany: z.enum(
     ["UZGPS", "BEPRO"],
     "Выберите компанию, через которую вы совершаете договор"
   ),
+  manager: z.string().min(2, "Выберите Менеджера контракта"),
 });
 
 export const individualSchema = z.object({
   date: z.date("Выберите дату"),
   personName: z.string().min(1, "ФИО обязательно для заполнения").trim(),
+  phone: z
+    .string()
+    .nonempty({ message: "Телефон обязателен" })
+    .trim()
+    .refine((s) => /^\+[1-9]\d{7,14}$/.test(s), {
+      message: "Номер должен быть в формате E.164, например +79123456789",
+    }),
   passportSerries: z
     .string()
     .min(1, "Серия паспорта обязательна")
@@ -30,4 +45,5 @@ export const individualSchema = z.object({
     ["UZGPS", "BEPRO"],
     "Выберите компанию, через которую вы совершаете договор"
   ),
+  manager: z.string().min(2, "Выберите Менеджера контракта"),
 });
