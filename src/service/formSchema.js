@@ -8,7 +8,7 @@ export const legalEntitySchema = z.object({
     .nonempty({ message: "Телефон обязателен" })
     .trim()
     .refine((s) => /^\+[1-9]\d{7,14}$/.test(s), {
-      message: "Номер должен быть в формате E.164, например +79123456789",
+      message: "Введите номер, например +79123456789",
     }),
   inn: z.string().regex(/^[0-9]{9}$/, "ИНН должен состоять из 9 цифр"),
   companyName: z.string().min(2, "Введите название компании"),
@@ -27,7 +27,7 @@ export const individualSchema = z.object({
     .nonempty({ message: "Телефон обязателен" })
     .trim()
     .refine((s) => /^\+[1-9]\d{7,14}$/.test(s), {
-      message: "Номер должен быть в формате E.164, например +79123456789",
+      message: "Введите номер, например +79123456789",
     }),
   passportSerries: z
     .string()
