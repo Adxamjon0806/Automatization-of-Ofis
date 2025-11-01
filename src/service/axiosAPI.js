@@ -1,9 +1,9 @@
 import axios from "axios";
 
-// const _ = "http://localhost:5000";
+console.log(process.env.REACT_APP_SERVER_URL);
 
 const baseRequest = axios.create({
-  baseURL: "https://automatization-server.onrender.com",
+  baseURL: process.env.REACT_APP_SERVER_URL,
 });
 
 export const postTheLegalDatas = async function (data, setIsLoading) {
