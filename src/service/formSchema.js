@@ -4,6 +4,7 @@ import z from "zod";
 export const legalEntitySchema = z.object({
   date: z.date("Выберите дату"),
   phone: z.string().nonempty({ message: "Телефон обязателен" }).trim(),
+  mfo: z.string().nonempty({ message: "Введите МФО" }).trim(),
   inn: z.string().regex(/^[0-9]{9}$/, "ИНН должен состоять из 9 цифр"),
   companyName: z.string().min(2, "Введите название компании"),
   dealingCompany: z.enum(

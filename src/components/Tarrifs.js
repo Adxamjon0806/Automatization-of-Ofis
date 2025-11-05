@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "../styles/Table.css"; // Стили для таблицы
-import { tarrifData } from "../service/tarrifDatas";
 
-const Tarrifs = ({ setFormData }) => {
+// tarrifType = tarrifs : abonentTarrifs
+
+const Tarrifs = ({ setFormData, tarrifData, tarrifType }) => {
   const [tarrifs, setServices] = useState(tarrifData);
 
   const handleRadioChange = (id) => {
@@ -14,7 +15,11 @@ const Tarrifs = ({ setFormData }) => {
 
     const updateFormTarrifs = updatedServices.filter((el) => el.selected);
 
-    setFormData((prev) => ({ ...prev, tarrifs: updateFormTarrifs }));
+    setFormData((prev) => {
+      let changingData = { ...prev };
+      changingData[tarrifType] = updateFormTarrifs;
+      return changingData;
+    });
   };
 
   const handleInputChange = (id, field, value) => {
@@ -24,12 +29,19 @@ const Tarrifs = ({ setFormData }) => {
 
     for (let i = 0; i < updatedServices.length; i++) {
       const element = updatedServices[i];
-      element.totalPrice = Number(element.price) * Number(element.count);
+      element.totalPrice =
+        Number(element.price) *
+        Number(element.count) *
+        (element.term ? Number(element.term) : 1);
     }
     setServices(updatedServices);
     const updateFormTarrifs = updatedServices.filter((el) => el.selected);
 
-    setFormData((prev) => ({ ...prev, tarrifs: updateFormTarrifs }));
+    setFormData((prev) => {
+      let changingData = { ...prev };
+      changingData[tarrifType] = updateFormTarrifs;
+      return changingData;
+    });
   };
 
   return (
@@ -69,7 +81,6 @@ const Tarrifs = ({ setFormData }) => {
                   />
                 </td>
               </tr>
-
               {/* Расширяемая часть */}
               {service.selected && (
                 <tr className="expanded-content">
@@ -124,6 +135,24 @@ const Tarrifs = ({ setFormData }) => {
                           onClick={(e) => e.stopPropagation()}
                         />
                       </div>
+                      {service.term && (
+                        <div className="count-section">
+                          <label>Срок:</label>
+                          <input
+                            type="number"
+                            value={service.term}
+                            onChange={(e) =>
+                              handleInputChange(
+                                service.id,
+                                "term",
+                                e.target.value
+                              )
+                            }
+                            className="editable-input"
+                            onClick={(e) => e.stopPropagation()}
+                          />
+                        </div>
+                      )}
                       <div className="totalPrice-section">
                         <label>Общая сумма:</label>
                         <input

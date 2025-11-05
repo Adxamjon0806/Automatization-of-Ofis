@@ -4,7 +4,7 @@ import { postTheIndividualDatas } from "../service/axiosAPI";
 import DatePicker from "react-datepicker";
 import Requesits from "../components/Requesits";
 import Tarrifs from "../components/Tarrifs";
-import AbonentTarrifs from "../components/AbonentTarrifs";
+import { abonentTarrifDatas, tarrifData } from "../service/tarrifDatas";
 
 const IndividualAgreement = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -144,9 +144,17 @@ const IndividualAgreement = () => {
         {errors.inn && <p className="error">{errors.inn}</p>}
       </div>
       <Requesits requesits={requesits} setRequesits={setRequesits} />
-      <Tarrifs setFormData={setFormData} />
+      <Tarrifs
+        setFormData={setFormData}
+        tarrifData={tarrifData}
+        tarrifType="tarrifs"
+      />
       {errors.tarrifs && <p className="error">{errors.tarrifs}</p>}
-      <AbonentTarrifs setFormData={setFormData} />
+      <Tarrifs
+        setFormData={setFormData}
+        tarrifData={abonentTarrifDatas}
+        tarrifType="abonentTarrifs"
+      />
       <div className="SengingErrorWrapper">
         <div className="typesOfSendigWrapper">
           <div>

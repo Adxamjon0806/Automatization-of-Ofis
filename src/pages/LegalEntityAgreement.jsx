@@ -4,7 +4,7 @@ import { postTheLegalDatas } from "../service/axiosAPI";
 import DatePicker from "react-datepicker";
 import Requesits from "../components/Requesits";
 import Tarrifs from "../components/Tarrifs";
-import AbonentTarrifs from "../components/AbonentTarrifs";
+import { abonentTarrifDatas, tarrifData } from "../service/tarrifDatas";
 
 const LegalEntityAgreement = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +19,7 @@ const LegalEntityAgreement = () => {
     phone: "",
     account: "",
     bank: "",
-    nfo: "",
+    mfo: "",
     okef: "",
     inn: "",
     taxNumber: "",
@@ -30,6 +30,7 @@ const LegalEntityAgreement = () => {
     manager: "",
     dealingCompany: "",
   });
+  // console.log(formData, tarrifData);
 
   // Ошибки
   const [errors, setErrors] = useState({});
@@ -111,8 +112,9 @@ const LegalEntityAgreement = () => {
       </div>
       <div>
         <label>МФО: </label>
-        <input name="nfo" value={formData.nfo} onChange={handleChange} />
+        <input name="mfo" value={formData.mfo} onChange={handleChange} />
       </div>
+      {errors.mfo && <p className="error">{errors.mfo}</p>}
       <div>
         <label>ОКЭД: </label>
         <input name="okef" value={formData.okef} onChange={handleChange} />
@@ -131,9 +133,17 @@ const LegalEntityAgreement = () => {
         />
       </div>
       <Requesits requesits={requesits} setRequesits={setRequesits} />
-      <Tarrifs setFormData={setFormData} />
+      <Tarrifs
+        setFormData={setFormData}
+        tarrifData={tarrifData}
+        tarrifType="tarrifs"
+      />
       {errors.tarrifs && <p className="error">{errors.tarrifs}</p>}
-      <AbonentTarrifs setFormData={setFormData} />
+      <Tarrifs
+        setFormData={setFormData}
+        tarrifData={abonentTarrifDatas}
+        tarrifType="abonentTarrifs"
+      />
       <div className="SengingErrorWrapper">
         <div className="typesOfSendigWrapper">
           <div>
