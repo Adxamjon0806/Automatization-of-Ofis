@@ -30,7 +30,6 @@ const LegalEntityAgreement = () => {
     manager: "",
     dealingCompany: "",
   });
-  // console.log(formData, tarrifData);
 
   // Ошибки
   const [errors, setErrors] = useState({});

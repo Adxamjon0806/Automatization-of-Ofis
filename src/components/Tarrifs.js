@@ -27,6 +27,8 @@ const Tarrifs = ({ setFormData, tarrifData, tarrifType }) => {
       service.id === id ? { ...service, [field]: value } : service
     );
 
+    let hasChangedIndicator;
+
     for (let i = 0; i < updatedServices.length; i++) {
       const element = updatedServices[i];
       element.totalPrice =
@@ -34,6 +36,19 @@ const Tarrifs = ({ setFormData, tarrifData, tarrifType }) => {
         Number(element.count) *
         (element.term ? Number(element.term) : 1);
     }
+    for (let i = 0; i < updatedServices.length; i++) {
+      const element = updatedServices[i];
+      const originalElement = tarrifData[i];
+
+      if (Number(element.price) !== Number(originalElement.price)) {
+        hasChangedIndicator = true;
+        break;
+      } else {
+        hasChangedIndicator = false;
+      }
+    }
+    // console.log(hasChangedIndicator);
+    setFormData((prev) => ({ ...prev, hasChanged: hasChangedIndicator }));
     setServices(updatedServices);
     const updateFormTarrifs = updatedServices.filter((el) => el.selected);
 
